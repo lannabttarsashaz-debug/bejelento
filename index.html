@@ -6,6 +6,8 @@
 <title>Társasházi bejelentő adatlap – L'ANNA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com" crossorigin>
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#faf7f1;--card:#fff;--ink:#1d2a44;--soft:#5d6577;--line:#ece3d3;--gold:#b08d57;--gold2:#8a6934;--cream:#fbf5ea;--red:#a33a3a}
@@ -19,13 +21,18 @@ body{font:500 17px/1.5 'Cormorant Garamond',Georgia,serif;font-variant-numeric:l
 .card{position:relative}
 /* Címsor */
 .cim{padding-top:2px}
-h1{margin:6px 0 0;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;color:#1b2740}
-.hazcim{display:inline-block;max-width:100%;font:400 52px/1.15 'Great Vibes',cursive;white-space:nowrap;color:#1b2740;padding:0 4px}
+h1{margin:6px 0 0;display:flex;flex-direction:column;align-items:center;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;color:#1b2740}
+.hazcim{display:inline-flex;align-items:center;justify-content:center;height:68px;max-width:100%;font:400 52px/1.15 'Great Vibes',cursive;white-space:nowrap;color:#1b2740;padding:0 4px}
 .hazcim:empty{display:none}
-.alcim{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px;font-weight:500;font-style:italic;font-size:clamp(18px,5vw,22px);letter-spacing:.12em;color:#8a6934}
+.alcim{display:flex;align-self:stretch;align-items:center;justify-content:center;gap:12px;margin-top:6px;font-weight:500;font-style:italic;font-size:clamp(18px,5vw,22px);letter-spacing:.12em;color:#8a6934}
 .alcim::before,.alcim::after{content:'';flex:0 1 44px;height:1px;background:linear-gradient(90deg,transparent,#b08d57)}
 .alcim::after{background:linear-gradient(90deg,#b08d57,transparent)}
 .hazcim:empty+.alcim{font-size:clamp(26px,7.5vw,36px);font-style:normal;letter-spacing:.02em;color:#1b2740}
+/* Amíg a ház neve betöltődik, a helye már foglalt, így a cím nem ugrik */
+h1.var .hazcim:empty{display:inline-flex;width:1px}
+h1.var .hazcim:empty+.alcim{font-size:clamp(18px,5vw,22px);font-style:italic;letter-spacing:.12em;color:#8a6934}
+.hazcim.beuszott{animation:beuszik .5s ease-out}
+@keyframes beuszik{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .haz{display:flex;align-items:center;gap:7px;margin:10px 0 0;color:var(--ink);font-size:17.5px;font-weight:600}
 .haz svg{width:17px;height:17px;flex:none}
 #urlap{margin-top:22px}
@@ -90,14 +97,20 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
 .forgo{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:forog .8s linear infinite}
 @keyframes forog{to{transform:rotate(360deg)}}
 /* Köszönő */
-.koszi{text-align:center;padding:10px 4px}
-.pipa{width:78px;height:78px;margin:6px auto 16px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fbf1dc,#ead3a6);box-shadow:inset 0 0 0 1.5px var(--gold)}
-.koszi h2{font:600 34px/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#1b2740}
-.koszi p{color:var(--soft);margin:0 auto 8px;max-width:430px}
-.nyugta{margin:18px auto 0;max-width:400px;text-align:left;border:1px solid var(--line);border-radius:14px;padding:4px 16px;background:#fffdf9}
-.nyugta div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:16.5px}.nyugta div+div{border-top:1px solid var(--line)}
+/* Köszönő képernyő: a teljes képernyőt kitölti, ott jelenik meg, ahol a látogató épp van, és mindig kifér */
+.koszi{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;text-align:center;background:radial-gradient(700px 520px at 105% 38%,rgba(221,206,238,.55),transparent 62%),radial-gradient(760px 560px at -12% 72%,rgba(242,214,196,.5),transparent 60%),radial-gradient(900px 500px at 50% 104%,rgba(226,200,152,.45),transparent 62%),linear-gradient(180deg,#fbf8f2 0%,#f7f0e5 45%,#f2ecf3 100%);animation:elotun .35s ease-out}
+.koszi[hidden]{display:none}
+@keyframes elotun{from{opacity:0}to{opacity:1}}
+.koszi-bel{width:100%;max-width:440px;transform-origin:center center}
+.koszi-haz{font:400 34px/1.15 'Great Vibes',cursive;white-space:nowrap;color:#1b2740;margin:0 0 14px}
+.koszi-haz:empty{display:none}
+.pipa{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fbf1dc,#ead3a6);box-shadow:inset 0 0 0 1.5px var(--gold)}
+.koszi h2{font:600 30px/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 10px;color:#1b2740}
+.koszi p{color:var(--soft);margin:0 auto 6px;max-width:420px;line-height:1.4}
+.nyugta{margin:14px auto 0;max-width:400px;text-align:left;border:1px solid var(--line);border-radius:14px;padding:2px 16px;background:#fffdf9}
+.nyugta div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:16px}.nyugta div+div{border-top:1px solid var(--line)}
 .nyugta dt{color:var(--soft)}.nyugta dd{margin:0;font-weight:600;text-align:right}
-.uj{margin-top:20px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);border-radius:99px;padding:11px 24px;font:600 17px 'Cormorant Garamond',Georgia,serif;cursor:pointer}
+.uj{margin-top:16px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);border-radius:99px;padding:11px 24px;font:600 17px 'Cormorant Garamond',Georgia,serif;cursor:pointer}
 .hullam{display:block;width:calc(100% + 36px);margin:14px -18px 0;height:44px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -187,19 +200,23 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     <button type="submit" class="gomb" id="kuld"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg><span id="kuldSzoveg">Bejelentés elküldése</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
   </form>
 
-  <!-- ===== KÖSZÖNŐ ===== -->
-  <div class="koszi" id="koszi" hidden aria-live="polite">
-    <div class="pipa"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+
+  <svg class="hullam" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 18 C120 60 260 64 380 44 S560 8 620 30" fill="none" stroke="#c9a86c" stroke-width="1.6"/><path d="M-10 34 C140 70 300 70 420 52 S570 30 620 44" fill="none" stroke="#e3cfa6" stroke-width="1"/></svg>
+</section>
+</main>
+
+<!-- ===== KÖSZÖNŐ ===== -->
+<div class="koszi" id="koszi" hidden aria-live="polite">
+  <div class="koszi-bel" id="kosziBel">
+    <div class="koszi-haz" id="kosziHaz"></div>
+    <div class="pipa"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
     <h2>Köszönjük a bejelentést!</h2>
     <p>Rögzítettük bejelentését.</p>
     <p>A bejelentés bekerült a képviselet nyilvántartásába, intézkedéseinket a lehető leghamarabb megkezdjük. Szükség esetén szakemberünk vagy munkatársunk közvetlenül keresni fogja Önt.</p>
     <dl class="nyugta" id="nyugta"></dl>
     <button type="button" class="uj" id="ujBtn">Új bejelentés</button>
   </div>
-
-  <svg class="hullam" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 18 C120 60 260 64 380 44 S560 8 620 30" fill="none" stroke="#c9a86c" stroke-width="1.6"/><path d="M-10 34 C140 70 300 70 420 52 S570 30 620 44" fill="none" stroke="#e3cfa6" stroke-width="1"/></svg>
-</section>
-</main>
+</div>
 
 <!-- A háttérrendszer címe külön fájlban van (beallitas.js), így az oldal frissítésekor nem kell újra beírni -->
 <script src="beallitas.js"></script>
@@ -214,14 +231,31 @@ const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 /* ---------- Ház neve és lakólista a háttérből ---------- */
+function hazNevBeallitasa(nev, animal) {
+  if (!nev || nev === HAZ_NEV) return;
+  HAZ_NEV = nev;
+  const el = $('hazcim');
+  el.textContent = nev;
+  if (animal) el.classList.add('beuszott');
+  hazcimIgazitas();
+  document.title = nev + ' – Bejelentő Adatlap';
+}
 if (HAZ && API_URL.startsWith('http')) {
+  const h1 = $('hazcim').parentElement;
+  h1.classList.add('var');
+  // Aki már járt itt, annál a ház neve azonnal megjelenik (a böngésző megjegyzi)
+  try { hazNevBeallitasa(localStorage.getItem('hazNev:' + HAZ) || '', false); } catch (e) {}
   fetch(API_URL + '?api=adatok&haz=' + encodeURIComponent(HAZ))
     .then(r => r.json())
     .then(d => {
-      if (d.hazNev) { HAZ_NEV = d.hazNev; $('hazcim').textContent = d.hazNev; hazcimIgazitas(); document.title = d.hazNev + ' – Bejelentő Adatlap'; }
+      if (d.hazNev) {
+        hazNevBeallitasa(d.hazNev, true);
+        try { localStorage.setItem('hazNev:' + HAZ, d.hazNev); } catch (e) {}
+      }
       LAKOK = d.lakok || [];
     })
-    .catch(() => {});
+    .catch(() => {})
+    .finally(() => h1.classList.remove('var'));
 }
 
 /* ---------- A ház neve egy sorban: a betűméret a név hosszához igazodik ---------- */
@@ -233,7 +267,9 @@ function hazcimIgazitas() {
   let meret = 52;                       // legnagyobb méret
   el.style.fontSize = meret + 'px';
   while (el.scrollWidth > hely && meret > 22) { meret -= 1; el.style.fontSize = meret + 'px'; }
-  el.style.whiteSpace = el.scrollWidth > hely ? 'normal' : 'nowrap';   // extrém hosszú névnél törhet
+  const tul = el.scrollWidth > hely;      // végső esetben két sorba törik
+  el.style.whiteSpace = tul ? 'normal' : 'nowrap';
+  el.style.height = tul ? 'auto' : '';   // extrém hosszú névnél törhet
   el.style.maxWidth = '100%';
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(hazcimIgazitas);
@@ -435,15 +471,34 @@ function siker(v) {
   sor.push(['Időpont', v.datum || new Date().toLocaleString('hu-HU')]);
   if (fajlok.length) sor.push(['Fotó', v.sikertelen ? v.csatolva + ' mentve, ' + v.sikertelen + ' sikertelen' : fajlok.length + ' db']);
   $('nyugta').innerHTML = sor.map(([k, x]) => `<div><dt>${esc(k)}</dt><dd>${esc(x)}</dd></div>`).join('');
-  $('urlap').hidden = true; $('koszi').hidden = false;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  $('kosziHaz').textContent = HAZ_NEV;
+  $('koszi').hidden = false;
+  document.documentElement.style.overflow = 'hidden';   // alatta az oldal nem görgethető
+  kosziIgazitas();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(kosziIgazitas);
 }
+/* A köszönő tartalom mindig kiférjen: ha a képernyő alacsony, arányosan kicsinyítjük */
+function kosziIgazitas() {
+  if ($('koszi').hidden) return;
+  const bel = $('kosziBel'), haz = $('kosziHaz');
+  bel.style.transform = '';
+  // a ház neve egy sorban: szükség esetén kisebb betűvel
+  let meret = 34;
+  haz.style.fontSize = meret + 'px'; haz.style.whiteSpace = 'nowrap';
+  while (haz.textContent && haz.scrollWidth > bel.clientWidth && meret > 18) { meret -= 1; haz.style.fontSize = meret + 'px'; }
+  if (haz.scrollWidth > bel.clientWidth) haz.style.whiteSpace = 'normal';
+  const hely = $('koszi').clientHeight - 32;
+  const arany = Math.min(1, hely / bel.offsetHeight);
+  bel.style.transform = arany < 1 ? 'scale(' + arany.toFixed(3) + ')' : '';
+}
+window.addEventListener('resize', kosziIgazitas);
 $('ujBtn').addEventListener('click', () => {
   $('urlap').reset(); fajlok = []; kepek(); nevElhagyva = false; lakoValaszt(null);
   $('bjKapcsolat').hidden = true; bjLenyit(false);
   document.querySelectorAll('.hiba').forEach(x => x.classList.remove('hiba'));
-  $('koszi').hidden = true; $('urlap').hidden = false;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  $('koszi').hidden = true;
+  document.documentElement.style.overflow = '';
+  window.scrollTo({ top: 0 });
 });
 kepek();
 </script>
