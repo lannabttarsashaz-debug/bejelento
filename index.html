@@ -27,8 +27,12 @@ h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margi
 .mezo{margin-bottom:18px}
 .mezo.sub{padding:14px;border:1.5px dashed #dccaa6;border-radius:14px;background:rgba(255,253,249,.8)}
 .mezo.sub .tipp{margin:0 0 12px}
-label.l,.l{display:block;font-weight:700;font-size:14.5px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px;color:#7a5a2b}
-.req{color:#c0392b;margin-left:3px}.opt{font-weight:500;font-size:15px;text-transform:none;letter-spacing:0;color:#6b6f7c}
+.lenyito{display:flex;align-items:center;gap:8px;width:100%;margin:-6px 0 18px;padding:4px 0;border:0;background:none;cursor:pointer;text-align:left;font:600 15.5px 'Cormorant Garamond',Georgia,serif;color:#7a5a2b}
+.lenyito .opt{font-size:14.5px}
+.plusz-kis{width:22px;height:22px;flex:none;border-radius:50%;display:grid;place-items:center;font:400 17px/1 Georgia,serif;color:#fff;background:linear-gradient(145deg,#d2b077,#9a7641);transition:transform .2s}
+.lenyito[aria-expanded=true] .plusz-kis{transform:rotate(45deg)}
+label.l,.l{display:block;font-weight:700;font-size:17px;letter-spacing:.01em;margin-bottom:6px;color:#7a5a2b}
+.req{color:#c0392b;margin-left:3px}.opt{font-weight:500;font-size:15px;letter-spacing:0;color:#6b6f7c}
 input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-weight:500;font-size:17.5px;color:var(--ink);background:rgba(255,255,255,.6);border:1.5px solid rgba(176,141,87,.35);border-radius:14px;padding:10px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
 textarea{min-height:120px;resize:vertical}
 input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,141,87,.15)}
@@ -118,9 +122,12 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
       </div>
     </div>
 
-    <div class="mezo">
+    <button type="button" class="lenyito" id="bjNyit" aria-expanded="false" aria-controls="bjMezo">
+      <span class="plusz-kis" aria-hidden="true">+</span>Más jelenti be? <span class="opt">(ha nem egyezik a kapcsolattartóval)</span>
+    </button>
+    <div class="mezo" id="bjMezo" hidden>
       <div>
-        <label class="l" for="bejelento">Bejelentő neve <span class="opt">(ha nem egyezik a kapcsolattartóval)</span></label>
+        <label class="l" for="bejelento">Bejelentő neve</label>
         <input type="text" id="bejelento" maxlength="120" autocomplete="off">
       </div>
     </div>
@@ -253,6 +260,15 @@ function ktMutat() {
 
 /* ---------- Bejelentő ≠ kapcsolattartó ---------- */
 const masBejelento = () => $('bejelento').value.trim() !== '';
+// „Más jelenti be?” – lenyitható bejelentő-mező; becsukáskor kiürül
+function bjLenyit(nyit) {
+  $('bjNyit').setAttribute('aria-expanded', nyit);
+  $('bjMezo').hidden = !nyit;
+  if (nyit) { $('bejelento').focus(); return; }
+  $('bejelento').value = '';
+  $('bejelento').dispatchEvent(new Event('input'));
+}
+$('bjNyit').addEventListener('click', () => bjLenyit($('bjMezo').hidden));
 $('bejelento').addEventListener('input', () => {
   $('bjKapcsolat').hidden = !masBejelento();
   if (!masBejelento()) ['telefon', 'email'].forEach(n => $('f-' + n).classList.remove('hiba'));
@@ -384,7 +400,7 @@ function siker(v) {
 }
 $('ujBtn').addEventListener('click', () => {
   $('urlap').reset(); fajlok = []; kepek(); nevElhagyva = false; lakoValaszt(null);
-  $('bjKapcsolat').hidden = true; $('db').textContent = '0';
+  $('bjKapcsolat').hidden = true; $('db').textContent = '0'; bjLenyit(false);
   document.querySelectorAll('.hiba').forEach(x => x.classList.remove('hiba'));
   $('koszi').hidden = true; $('urlap').hidden = false;
   window.scrollTo({ top: 0, behavior: 'smooth' });
