@@ -6,7 +6,7 @@
 <title>Társasházi bejelentő adatlap – L'ANNA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#faf7f1;--card:#fff;--ink:#1d2a44;--soft:#5d6577;--line:#ece3d3;--gold:#b08d57;--gold2:#8a6934;--cream:#fbf5ea;--red:#a33a3a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -20,7 +20,7 @@ body{font:500 17px/1.5 'Cormorant Garamond',Georgia,serif;font-variant-numeric:l
 /* Címsor */
 .cim{padding-top:2px}
 h1{margin:6px 0 0;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;color:#1b2740}
-.hazcim{display:block;font-weight:600;font-size:clamp(28px,8vw,40px);line-height:1.05;letter-spacing:-.01em}
+.hazcim{display:inline-block;max-width:100%;font:400 52px/1.15 'Great Vibes',cursive;white-space:nowrap;color:#1b2740;padding:0 4px}
 .hazcim:empty{display:none}
 .alcim{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px;font-weight:500;font-style:italic;font-size:clamp(18px,5vw,22px);letter-spacing:.12em;color:#8a6934}
 .alcim::before,.alcim::after{content:'';flex:0 1 44px;height:1px;background:linear-gradient(90deg,transparent,#b08d57)}
@@ -218,11 +218,26 @@ if (HAZ && API_URL.startsWith('http')) {
   fetch(API_URL + '?api=adatok&haz=' + encodeURIComponent(HAZ))
     .then(r => r.json())
     .then(d => {
-      if (d.hazNev) { HAZ_NEV = d.hazNev; $('hazcim').textContent = d.hazNev; document.title = d.hazNev + ' – Bejelentő Adatlap'; }
+      if (d.hazNev) { HAZ_NEV = d.hazNev; $('hazcim').textContent = d.hazNev; hazcimIgazitas(); document.title = d.hazNev + ' – Bejelentő Adatlap'; }
       LAKOK = d.lakok || [];
     })
     .catch(() => {});
 }
+
+/* ---------- A ház neve egy sorban: a betűméret a név hosszához igazodik ---------- */
+function hazcimIgazitas() {
+  const el = $('hazcim');
+  if (!el.textContent) return;
+  const hely = el.parentElement.clientWidth;
+  el.style.maxWidth = 'none';
+  let meret = 52;                       // legnagyobb méret
+  el.style.fontSize = meret + 'px';
+  while (el.scrollWidth > hely && meret > 22) { meret -= 1; el.style.fontSize = meret + 'px'; }
+  el.style.whiteSpace = el.scrollWidth > hely ? 'normal' : 'nowrap';   // extrém hosszú névnél törhet
+  el.style.maxWidth = '100%';
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(hazcimIgazitas);
+window.addEventListener('resize', hazcimIgazitas);
 
 /* ---------- Lakókereső ---------- */
 function lakoValaszt(l) {
