@@ -14,12 +14,18 @@
 html,body{margin:0}
 html{background:#f3ede6}
 body{font:500 17px/1.5 'Cormorant Garamond',Georgia,serif;font-variant-numeric:lining-nums;color:var(--ink);min-height:100vh;background:radial-gradient(700px 520px at 105% 38%,rgba(221,206,238,.55),transparent 62%),radial-gradient(760px 560px at -12% 72%,rgba(242,214,196,.5),transparent 60%),radial-gradient(900px 500px at 50% 104%,rgba(226,200,152,.45),transparent 62%),linear-gradient(180deg,#fbf8f2 0%,#f7f0e5 45%,#f2ecf3 100%)}
-.fej{display:block;width:100%;max-width:1400px;margin:0 auto;height:clamp(190px,46vw,420px);object-fit:cover;object-position:28% 0}
+.fej{display:block;width:100%;max-width:1400px;height:auto;margin:0 auto}
 .wrap{max-width:640px;margin:-4px auto 0;padding:0 18px max(24px,env(safe-area-inset-bottom));position:relative}
 .card{position:relative}
 /* Címsor */
 .cim{padding-top:2px}
-h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margin:0;letter-spacing:-.015em;color:#1b2740}
+h1{margin:6px 0 0;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;color:#1b2740}
+.hazcim{display:block;font-weight:600;font-size:clamp(28px,8vw,40px);line-height:1.05;letter-spacing:-.01em}
+.hazcim:empty{display:none}
+.alcim{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px;font-weight:500;font-style:italic;font-size:clamp(18px,5vw,22px);letter-spacing:.12em;color:#8a6934}
+.alcim::before,.alcim::after{content:'';flex:0 1 44px;height:1px;background:linear-gradient(90deg,transparent,#b08d57)}
+.alcim::after{background:linear-gradient(90deg,#b08d57,transparent)}
+.hazcim:empty+.alcim{font-size:clamp(26px,7.5vw,36px);font-style:normal;letter-spacing:.02em;color:#1b2740}
 .haz{display:flex;align-items:center;gap:7px;margin:10px 0 0;color:var(--ink);font-size:17.5px;font-weight:600}
 .haz svg{width:17px;height:17px;flex:none}
 #urlap{margin-top:22px}
@@ -92,7 +98,7 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
 <section class="card">
   <div class="cim">
     <div>
-      <h1 id="cim">Bejelentő Adatlap</h1>
+      <h1><span class="hazcim" id="hazcim"></span><span class="alcim">Bejelentő Adatlap</span></h1>
     </div>
   </div>
 
@@ -197,7 +203,7 @@ if (HAZ && API_URL.startsWith('http')) {
   fetch(API_URL + '?api=adatok&haz=' + encodeURIComponent(HAZ))
     .then(r => r.json())
     .then(d => {
-      if (d.hazNev) { HAZ_NEV = d.hazNev; $('cim').textContent = d.hazNev + ' Bejelentő Adatlap'; document.title = d.hazNev + ' – Bejelentő Adatlap'; }
+      if (d.hazNev) { HAZ_NEV = d.hazNev; $('hazcim').textContent = d.hazNev; document.title = d.hazNev + ' – Bejelentő Adatlap'; }
       LAKOK = d.lakok || [];
     })
     .catch(() => {});
