@@ -12,25 +12,22 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 html,body{margin:0}
-body{font:15px/1.5 'Nunito Sans',system-ui,sans-serif;color:var(--ink);background:radial-gradient(900px 600px at 50% 100%,#f6ecdc,transparent 70%),var(--bg);min-height:100vh}
+html{background:#f3ede6}
+body{font:15px/1.5 'Nunito Sans',system-ui,sans-serif;color:var(--ink);min-height:100vh;background:radial-gradient(700px 520px at 105% 38%,rgba(221,206,238,.55),transparent 62%),radial-gradient(760px 560px at -12% 72%,rgba(242,214,196,.5),transparent 60%),radial-gradient(900px 500px at 50% 104%,rgba(226,200,152,.45),transparent 62%),linear-gradient(180deg,#fbf8f2 0%,#f7f0e5 45%,#f2ecf3 100%)}
 .fej{display:block;width:100%;max-width:1400px;margin:0 auto;height:clamp(190px,46vw,420px);object-fit:cover;object-position:28% 0}
-.wrap{max-width:640px;margin:-26px auto 0;padding:0 14px max(28px,env(safe-area-inset-bottom));position:relative}
-.card{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#fffdfa);border-radius:26px;border:1px solid #efe7d8;box-shadow:0 24px 60px -30px rgba(29,42,68,.35),0 2px 6px rgba(29,42,68,.04);padding:26px 18px 30px}
-@media(min-width:560px){.card{padding:32px 30px}}
+.wrap{max-width:640px;margin:-4px auto 0;padding:0 18px max(24px,env(safe-area-inset-bottom));position:relative}
+.card{position:relative}
 /* Címsor */
-.cim{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
-.kor{width:clamp(58px,15vw,78px);height:clamp(58px,15vw,78px);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 38% 30%,#fdf6e8 0%,#f1dfbd 60%,#e2c794 100%);box-shadow:0 10px 22px -12px rgba(138,105,52,.7),inset 0 1px 0 #fff}
-.kor svg{width:46%;height:46%}
+.cim{padding-top:2px}
 h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margin:0;letter-spacing:-.015em;color:#1b2740}
 .haz{display:flex;align-items:center;gap:7px;margin:10px 0 0;color:var(--ink);font-size:15px}
 .haz svg{width:17px;height:17px;flex:none}
 .bev{margin:18px 0 12px;font-size:16.5px;color:#1b2740}
-.info{display:flex;gap:14px;align-items:center;background:linear-gradient(180deg,#fdf8ef,#fbf3e4);border:1px solid #efdfc0;border-radius:14px;padding:12px 14px;font-size:13.5px;color:#3d4556;margin-bottom:16px}
-.info svg{width:24px;height:24px;flex:none}
+.info{font-size:14.5px;color:#4a5263;margin:-4px 0 20px}
 /* Mezők */
-.mezo{display:grid;grid-template-columns:26px 1fr;gap:0 12px;border:1px solid #efe8dc;border-radius:14px;padding:13px 14px 14px 12px;margin-bottom:11px;background:#fff;box-shadow:0 4px 14px -10px rgba(29,42,68,.18)}
+.mezo{display:grid;grid-template-columns:26px 1fr;gap:0 12px;border:1px solid #efe8dc;border-radius:14px;padding:13px 14px 14px 12px;margin-bottom:11px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 6px 18px -12px rgba(29,42,68,.22)}
 .mezo>svg{width:25px;height:25px;margin-top:-2px}
-.mezo.sub{border-style:dashed;background:#fffdf9}
+.mezo.sub{border-style:dashed;background:rgba(255,253,249,.8)}
 label.l,.l{display:block;font-weight:500;font-size:15.5px;margin-bottom:8px;color:#1b2740}
 .req{color:#c0392b;margin-left:3px}.opt{font-weight:400;font-size:13.5px;color:#3d4556}
 input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid #e2dccf;border-radius:10px;padding:11px 13px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
@@ -80,7 +77,7 @@ input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(17
 .nyugta div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:14px}.nyugta div+div{border-top:1px solid var(--line)}
 .nyugta dt{color:var(--soft)}.nyugta dd{margin:0;font-weight:600;text-align:right}
 .uj{margin-top:20px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);border-radius:99px;padding:11px 24px;font:600 15px 'Nunito Sans',sans-serif;cursor:pointer}
-.hullam{display:block;width:calc(100% + 36px);margin:10px -18px -30px;height:44px}
+.hullam{display:block;width:calc(100% + 36px);margin:14px -18px 0;height:44px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -90,7 +87,6 @@ input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(17
 <main class="wrap">
 <section class="card">
   <div class="cim">
-    <div class="kor" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#9a7641" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></div>
     <div>
       <h1>Társasházi bejelentő adatlap</h1>
       <p class="haz" id="hazSor" hidden><svg viewBox="0 0 24 24" fill="#b08d57"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span id="hazNev"></span></p>
@@ -100,8 +96,7 @@ input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(17
   <!-- ===== ŰRLAP ===== -->
   <form id="urlap" novalidate>
     <p class="bev">Kérjük, szíveskedjen megírni a bejelentését.</p>
-    <div class="info"><svg viewBox="0 0 24 24" fill="none" stroke="#9a7641" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01" stroke-linecap="round"/></svg>
-      <span>A közös képviselő minden bejelentést feldolgoz, és szükség esetén felveszi Önnel a kapcsolatot.</span></div>
+    <p class="info">A közös képviselő minden bejelentést feldolgoz, és szükség esetén felveszi Önnel a kapcsolatot.</p>
 
     <div class="mezo" id="f-kapcsolattarto">
       <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
