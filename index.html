@@ -22,24 +22,15 @@ body{font:500 17px/1.5 'Cormorant Garamond',Georgia,serif;font-variant-numeric:l
 h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margin:0;letter-spacing:-.015em;color:#1b2740}
 .haz{display:flex;align-items:center;gap:7px;margin:10px 0 0;color:var(--ink);font-size:17.5px;font-weight:600}
 .haz svg{width:17px;height:17px;flex:none}
-.info{font-size:17px;color:#4a5263;margin:14px 0 26px}
+.info{font-size:16.5px;color:#4a5263;margin:12px 0 22px}
 /* Mezők */
-.mezo{display:grid;grid-template-columns:30px 1fr;column-gap:10px;align-items:center;margin-bottom:18px}
-.mezo>div{display:contents}
-.mezo>div>*:not(.l){grid-column:1/-1}
-.mezo>div>.l{margin:0}
-.mezo>div>.l+*{margin-top:8px}
-/* Ikon: arany „érme” finom színátmenettel és gyűrűvel */
-.mezo>svg{width:30px;height:30px;padding:7px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fffaf0 0%,#f5e6c8 55%,#e6cb97 100%);box-shadow:inset 0 0 0 1px rgba(176,141,87,.5),inset 0 -2px 4px rgba(138,105,52,.18),0 4px 10px -7px rgba(138,105,52,.6)}
-.mezo.sub{align-items:start;padding:14px;border:1.5px dashed #dccaa6;border-radius:14px;background:rgba(255,253,249,.8)}
-.mezo.sub>div{display:block}
-.mezo.sub>div>*{grid-column:auto}
-.mezo.sub .tipp{margin:6px 0 12px}
-.mezo.sub .ket>div>.l{margin-bottom:8px}
-label.l,.l{display:block;font-weight:600;font-size:18px;letter-spacing:.005em;margin-bottom:8px;color:#1b2740}
-.req{color:#c0392b;margin-left:3px}.opt{font-weight:500;font-size:15.5px;letter-spacing:0;color:#4a5263}
-input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-weight:500;font-size:17.5px;color:var(--ink);background:rgba(255,255,255,.6);border:1px solid rgba(176,141,87,.38);border-radius:10px;padding:10px 12px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
-textarea{min-height:104px;resize:vertical}
+.mezo{margin-bottom:18px}
+.mezo.sub{padding:14px;border:1.5px dashed #dccaa6;border-radius:14px;background:rgba(255,253,249,.8)}
+.mezo.sub .tipp{margin:0 0 12px}
+label.l,.l{display:block;font-weight:700;font-size:14.5px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px;color:#7a5a2b}
+.req{color:#c0392b;margin-left:3px}.opt{font-weight:500;font-size:15px;text-transform:none;letter-spacing:0;color:#6b6f7c}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-weight:500;font-size:17.5px;color:var(--ink);background:rgba(255,255,255,.6);border:1.5px solid rgba(176,141,87,.35);border-radius:14px;padding:10px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
+textarea{min-height:120px;resize:vertical}
 input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,141,87,.15)}
 .hiba input,.hiba textarea{border-color:var(--red)}
 .err{display:none;color:var(--red);font-size:15px;font-weight:600;margin-top:6px}.hiba .err{display:block}
@@ -56,7 +47,7 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
 .lista li.ures{cursor:default;color:var(--soft);font-size:16px;background:none}
 .valasztva{display:inline-flex;gap:6px;margin-top:8px;padding:5px 12px;border-radius:99px;background:var(--cream);color:var(--gold2);font-size:15px;font-weight:600}
 /* Fotók */
-.drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px;border:1.5px dashed #dccaa6;border-radius:12px;background:#fffdf9;text-align:center;cursor:pointer}
+.drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 12px;border:1.5px dashed #dccaa6;border-radius:14px;background:#fffdf9;text-align:center;cursor:pointer}
 .drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .drop .plusz{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:26px;font-weight:300;line-height:1;background:linear-gradient(145deg,#d2b077,#9a7641);box-shadow:0 6px 14px -6px rgba(138,105,52,.7)}
 .drop b{font-weight:600;font-size:17.5px;color:#6f5327}.drop span{font-size:15px;color:#4a5263}
@@ -106,7 +97,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     <p class="info">A közös képviselő minden bejelentést feldolgoz, és szükség esetén felveszi Önnel a kapcsolatot.</p>
 
     <div class="mezo" id="f-kapcsolattarto">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
       <div>
         <label class="l" for="kapcsolattarto">Kapcsolattartó tulajdonos neve <span class="req">*</span></label>
         <div class="ac">
@@ -119,7 +109,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     </div>
 
     <div class="mezo sub" id="ktKapcsolat" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
       <div>
         <p class="tipp" id="ktTipp"></p>
         <div class="ket">
@@ -130,7 +119,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     </div>
 
     <div class="mezo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
       <div>
         <label class="l" for="bejelento">Bejelentő neve <span class="opt">(ha nem egyezik a kapcsolattartóval)</span></label>
         <input type="text" id="bejelento" maxlength="120" autocomplete="off">
@@ -138,7 +126,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     </div>
 
     <div class="mezo sub" id="bjKapcsolat" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
       <div>
         <p class="tipp">Kérjük, adja meg a bejelentő elérhetőségét is.</p>
         <div class="ket">
@@ -149,12 +136,10 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     </div>
 
     <div class="mezo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>
       <div><label class="l" for="targy">Tárgy</label><input type="text" id="targy" maxlength="200"></div>
     </div>
 
     <div class="mezo" id="f-leiras">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
       <div>
         <label class="l" for="leiras">Esemény leírása <span class="req">*</span></label>
         <textarea id="leiras" maxlength="5000"></textarea>
@@ -164,7 +149,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     </div>
 
     <div class="mezo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
       <div>
         <span class="l">Fotók</span>
         <label class="drop" id="drop"><span class="plusz">+</span><b>Fotó készítése vagy feltöltése</b><span id="dropDb">Legfeljebb 5 fájl</span>
