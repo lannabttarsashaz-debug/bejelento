@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Társasházi bejelentő adatlap – L'ANNA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f1;--card:#fff;--ink:#1d2a44;--soft:#5d6577;--line:#ece3d3;--gold:#b08d57;--gold2:#8a6934;--cream:#fbf5ea;--red:#a33a3a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{font:15px/1.5 'Nunito Sans',system-ui,sans-serif;color:var(--ink);background:radial-gradient(900px 600px at 50% 100%,#f6ecdc,transparent 70%),var(--bg);min-height:100vh}
+.fej{display:block;width:100%;max-width:1400px;margin:0 auto;height:clamp(190px,46vw,420px);object-fit:cover;object-position:28% 0}
+.wrap{max-width:640px;margin:-26px auto 0;padding:0 14px max(28px,env(safe-area-inset-bottom));position:relative}
+.card{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#fffdfa);border-radius:26px;border:1px solid #efe7d8;box-shadow:0 24px 60px -30px rgba(29,42,68,.35),0 2px 6px rgba(29,42,68,.04);padding:26px 18px 30px}
+@media(min-width:560px){.card{padding:32px 30px}}
+/* Címsor */
+.cim{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.kor{width:clamp(58px,15vw,78px);height:clamp(58px,15vw,78px);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 38% 30%,#fdf6e8 0%,#f1dfbd 60%,#e2c794 100%);box-shadow:0 10px 22px -12px rgba(138,105,52,.7),inset 0 1px 0 #fff}
+.kor svg{width:46%;height:46%}
+h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margin:0;letter-spacing:-.015em;color:#1b2740}
+.haz{display:flex;align-items:center;gap:7px;margin:10px 0 0;color:var(--ink);font-size:15px}
+.haz svg{width:17px;height:17px;flex:none}
+.bev{margin:18px 0 12px;font-size:16.5px;color:#1b2740}
+.info{display:flex;gap:14px;align-items:center;background:linear-gradient(180deg,#fdf8ef,#fbf3e4);border:1px solid #efdfc0;border-radius:14px;padding:12px 14px;font-size:13.5px;color:#3d4556;margin-bottom:16px}
+.info svg{width:24px;height:24px;flex:none}
+/* Mezők */
+.mezo{display:grid;grid-template-columns:26px 1fr;gap:0 12px;border:1px solid #efe8dc;border-radius:14px;padding:13px 14px 14px 12px;margin-bottom:11px;background:#fff;box-shadow:0 4px 14px -10px rgba(29,42,68,.18)}
+.mezo>svg{width:25px;height:25px;margin-top:-2px}
+.mezo.sub{border-style:dashed;background:#fffdf9}
+label.l,.l{display:block;font-weight:500;font-size:15.5px;margin-bottom:8px;color:#1b2740}
+.req{color:#c0392b;margin-left:3px}.opt{font-weight:400;font-size:13.5px;color:#3d4556}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid #e2dccf;border-radius:10px;padding:11px 13px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,141,87,.15)}
+.hiba input,.hiba textarea{border-color:var(--red)}
+.err{display:none;color:var(--red);font-size:12.5px;margin-top:6px}.hiba .err{display:block}
+.szamlalo{text-align:right;font-size:12.5px;color:var(--soft);margin-top:5px}
+.tipp{font-size:13px;color:var(--soft);margin:0 0 10px}
+.ket{display:grid;gap:10px}@media(min-width:520px){.ket{grid-template-columns:1fr 1fr}}
+/* Lakókereső */
+.ac{position:relative}
+.lista{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto;background:#fff;border:1.5px solid var(--gold);border-radius:12px;box-shadow:0 14px 34px -12px rgba(29,42,68,.35)}
+.lista li{padding:11px 12px;border-radius:8px;cursor:pointer}
+.lista li.akt,.lista li:hover{background:var(--cream)}
+.lista mark{background:none;color:var(--gold2);font-weight:600}
+.lista small{color:var(--soft)}
+.lista li.ures{cursor:default;color:var(--soft);font-size:14px;background:none}
+.valasztva{display:inline-flex;gap:6px;margin-top:8px;padding:5px 12px;border-radius:99px;background:var(--cream);color:var(--gold2);font-size:13px;font-weight:600}
+/* Fotók */
+.drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px 12px;border:1.5px dashed #dccaa6;border-radius:12px;background:#fffdf9;text-align:center;cursor:pointer}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop .plusz{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:30px;font-weight:300;line-height:1;background:linear-gradient(145deg,#d2b077,#9a7641);box-shadow:0 6px 14px -6px rgba(138,105,52,.7)}
+.drop b{font-weight:500;font-size:14.5px;color:#6f5327}.drop span{font-size:13px;color:#3d5a80}
+.kepek{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin-top:10px}.kepek:empty{display:none}
+.kep{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--cream)}
+.kep img{width:100%;height:100%;object-fit:cover}
+.kep div{height:100%;display:grid;place-items:center;font-size:12px;color:var(--gold2);padding:6px;text-align:center;word-break:break-word}
+.kep button{position:absolute;top:4px;right:4px;width:28px;height:28px;border:0;border-radius:50%;background:rgba(20,24,34,.75);color:#fff;font-size:16px}
+/* Alsó rész */
+.adatv{display:flex;gap:10px;align-items:center;font-size:12.5px;color:#3d5a80;margin:14px 4px 0}
+.adatv svg{width:22px;height:22px;flex:none}
+.hibauz{margin-top:14px;padding:12px 14px;border-radius:12px;background:#fbecec;color:var(--red);font-size:14px}
+.gomb{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:12px;width:78%;min-width:260px;max-width:420px;margin:22px auto 0;min-height:52px;border:0;border-radius:99px;cursor:pointer;font:500 16.5px 'Nunito Sans',sans-serif;color:#fff;background:linear-gradient(180deg,#d4b27a 0%,#b38c52 50%,#8d6a35 100%);box-shadow:0 14px 28px -12px rgba(138,105,52,.75),inset 0 1px 0 rgba(255,255,255,.45);text-shadow:0 1px 1px rgba(90,64,25,.4);transition:transform .15s,filter .2s}
+.gomb:hover{transform:translateY(-1px);filter:brightness(1.04)}.gomb:active{transform:translateY(1px)}
+.gomb svg{width:21px;height:21px}.gomb[disabled]{opacity:.75}
+.gomb::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 48%,transparent 66%);transform:translateX(-120%);animation:feny 4.5s ease-in-out 1.5s infinite}
+@keyframes feny{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.forgo{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:forog .8s linear infinite}
+@keyframes forog{to{transform:rotate(360deg)}}
+/* Köszönő */
+.koszi{text-align:center;padding:10px 4px}
+.pipa{width:78px;height:78px;margin:6px auto 16px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fbf1dc,#ead3a6);box-shadow:inset 0 0 0 1.5px var(--gold)}
+.koszi h2{font:600 34px/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#1b2740}
+.koszi p{color:var(--soft);margin:0 auto 8px;max-width:430px}
+.nyugta{margin:18px auto 0;max-width:400px;text-align:left;border:1px solid var(--line);border-radius:14px;padding:4px 16px;background:#fffdf9}
+.nyugta div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:14px}.nyugta div+div{border-top:1px solid var(--line)}
+.nyugta dt{color:var(--soft)}.nyugta dd{margin:0;font-weight:600;text-align:right}
+.uj{margin-top:20px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);border-radius:99px;padding:11px 24px;font:600 15px 'Nunito Sans',sans-serif;cursor:pointer}
+.hullam{display:block;width:calc(100% + 36px);margin:10px -18px -30px;height:44px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<img class="fej" src="fejlec.webp" alt="L'ANNA Társasházkezelő és Szolgáltató Bt.">
+
+<main class="wrap">
+<section class="card">
+  <div class="cim">
+    <div class="kor" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#9a7641" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></div>
+    <div>
+      <h1>Társasházi bejelentő adatlap</h1>
+      <p class="haz" id="hazSor" hidden><svg viewBox="0 0 24 24" fill="#b08d57"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span id="hazNev"></span></p>
+    </div>
+  </div>
+
+  <!-- ===== ŰRLAP ===== -->
+  <form id="urlap" novalidate>
+    <p class="bev">Kérjük, szíveskedjen megírni a bejelentését.</p>
+    <div class="info"><svg viewBox="0 0 24 24" fill="none" stroke="#9a7641" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01" stroke-linecap="round"/></svg>
+      <span>A közös képviselő minden bejelentést feldolgoz, és szükség esetén felveszi Önnel a kapcsolatot.</span></div>
+
+    <div class="mezo" id="f-kapcsolattarto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+      <div>
+        <label class="l" for="kapcsolattarto">Kapcsolattartó tulajdonos neve <span class="req">*</span></label>
+        <div class="ac">
+          <input type="text" id="kapcsolattarto" maxlength="120" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="lakoLista">
+          <ul class="lista" id="lakoLista" role="listbox" hidden></ul>
+        </div>
+        <span class="valasztva" id="lakoValasztva" hidden></span>
+        <div class="err">Kérjük, adja meg a kapcsolattartó tulajdonos nevét.</div>
+      </div>
+    </div>
+
+    <div class="mezo sub" id="ktKapcsolat" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <div>
+        <p class="tipp" id="ktTipp"></p>
+        <div class="ket">
+          <div id="f-kt_telefon"><label class="l" for="kt_telefon">Telefonszám</label><input type="tel" id="kt_telefon" inputmode="tel" autocomplete="tel" maxlength="30"><div class="err"></div></div>
+          <div id="f-kt_email"><label class="l" for="kt_email">E-mail cím</label><input type="email" id="kt_email" inputmode="email" autocomplete="email" maxlength="150"><div class="err"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mezo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+      <div>
+        <label class="l" for="bejelento">Bejelentő neve <span class="opt">(ha nem egyezik a kapcsolattartóval)</span></label>
+        <input type="text" id="bejelento" maxlength="120" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="mezo sub" id="bjKapcsolat" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <div>
+        <p class="tipp">Kérjük, adja meg a bejelentő elérhetőségét is.</p>
+        <div class="ket">
+          <div id="f-telefon"><label class="l" for="telefon">A bejelentő telefonszáma <span class="req">*</span></label><input type="tel" id="telefon" inputmode="tel" autocomplete="off" maxlength="30"><div class="err"></div></div>
+          <div id="f-email"><label class="l" for="email">A bejelentő e-mail címe <span class="req">*</span></label><input type="email" id="email" inputmode="email" autocomplete="off" maxlength="150"><div class="err"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mezo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>
+      <div><label class="l" for="targy">Tárgy</label><input type="text" id="targy" maxlength="200"></div>
+    </div>
+
+    <div class="mezo" id="f-leiras">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+      <div>
+        <label class="l" for="leiras">Esemény leírása <span class="req">*</span></label>
+        <textarea id="leiras" maxlength="5000"></textarea>
+        <div class="szamlalo"><span id="db">0</span> / 5000</div>
+        <div class="err">Kérjük, írja le részletesebben az eseményt.</div>
+      </div>
+    </div>
+
+    <div class="mezo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9834a" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
+      <div>
+        <span class="l">Fotók</span>
+        <label class="drop" id="drop"><span class="plusz">+</span><b>Fotó készítése vagy feltöltése</b><span id="dropDb">Legfeljebb 5 fájl</span>
+          <input type="file" id="foto" accept="image/*,application/pdf" multiple></label>
+        <p class="tipp" id="elokeszit" hidden>Fotó előkészítése…</p>
+        <div class="kepek" id="kepek"></div>
+      </div>
+    </div>
+
+    <p class="adatv"><svg viewBox="0 0 24 24" fill="none" stroke="#1d2a44" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Adatait kizárólag a bejelentés intézéséhez használjuk fel.</p>
+    <div class="hibauz" id="hibauz" hidden></div>
+    <button type="submit" class="gomb" id="kuld"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg><span id="kuldSzoveg">Bejelentés elküldése</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+  </form>
+
+  <!-- ===== KÖSZÖNŐ ===== -->
+  <div class="koszi" id="koszi" hidden aria-live="polite">
+    <div class="pipa"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8a6934" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>Köszönjük a bejelentést!</h2>
+    <p>Rögzítettük bejelentését.</p>
+    <p>A bejelentés bekerült a képviselet nyilvántartásába, intézkedéseinket a lehető leghamarabb megkezdjük. Szükség esetén szakemberünk vagy munkatársunk közvetlenül keresni fogja Önt.</p>
+    <dl class="nyugta" id="nyugta"></dl>
+    <button type="button" class="uj" id="ujBtn">Új bejelentés</button>
+  </div>
+
+  <svg class="hullam" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 18 C120 60 260 64 380 44 S560 8 620 30" fill="none" stroke="#c9a86c" stroke-width="1.6"/><path d="M-10 34 C140 70 300 70 420 52 S570 30 620 44" fill="none" stroke="#e3cfa6" stroke-width="1"/></svg>
+</section>
+</main>
+
+<!-- A háttérrendszer címe külön fájlban van (beallitas.js), így az oldal frissítésekor nem kell újra beírni -->
+<script src="beallitas.js"></script>
+<script>
+const API_URL = String(window.BEJELENTO_API || '');
+
+const $ = id => document.getElementById(id);
+const HAZ = new URLSearchParams(location.search).get('haz') || '';
+const MAX = 5;
+let LAKOK = [], valasztott = null, nevElhagyva = false, fajlok = [];
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* ---------- Ház neve és lakólista a háttérből ---------- */
+if (HAZ && API_URL.startsWith('http')) {
+  fetch(API_URL + '?api=adatok&haz=' + encodeURIComponent(HAZ))
+    .then(r => r.json())
+    .then(d => {
+      if (d.hazNev) { $('hazNev').textContent = d.hazNev; $('hazSor').hidden = false; document.title = 'Bejelentés – ' + d.hazNev; }
+      LAKOK = d.lakok || [];
+    })
+    .catch(() => {});
+}
+
+/* ---------- Lakókereső ---------- */
+function lakoValaszt(l) {
+  valasztott = l;
+  if (l) $('kapcsolattarto').value = l.nev;
+  $('lakoValasztva').hidden = !l;
+  $('lakoValasztva').textContent = l ? '✓ Regisztrált lakó' + (l.lakas ? ' · ' + l.lakas : '') : '';
+  ktMutat();
+}
+function ktMutat() {
+  const kell = nevElhagyva && !valasztott && $('kapcsolattarto').value.trim() !== '';
+  $('ktKapcsolat').hidden = !kell;
+  $('ktTipp').textContent = LAKOK.length
+    ? 'Ha nem találta magát a listában, kérjük, adja meg elérhetőségét is, hogy szükség esetén el tudjuk érni.'
+    : 'Kérjük, adja meg elérhetőségét is, hogy szükség esetén el tudjuk érni.';
+}
+(function () {
+  const inp = $('kapcsolattarto'), lista = $('lakoLista');
+  let talalat = [], akt = -1;
+  const zar = () => { lista.hidden = true; inp.setAttribute('aria-expanded', 'false'); akt = -1; };
+  function rajzol() {
+    const q = norm(inp.value);
+    if (!LAKOK.length || q.length < 2 || valasztott) return zar();
+    talalat = LAKOK.filter(l => norm(l.nev).includes(q)).slice(0, 10);
+    lista.innerHTML = talalat.length ? talalat.map((l, i) => {
+      const k = norm(l.nev).indexOf(q);
+      const n = esc(l.nev.slice(0, k)) + '<mark>' + esc(l.nev.slice(k, k + q.length)) + '</mark>' + esc(l.nev.slice(k + q.length));
+      return `<li role="option" data-i="${i}" class="${i === akt ? 'akt' : ''}">${n}${l.lakas ? ` <small>(${esc(l.lakas)})</small>` : ''}</li>`;
+    }).join('') : '<li class="ures">Nincs ilyen név a listában. Ha így jó, egyszerűen lépjen tovább.</li>';
+    lista.hidden = false; inp.setAttribute('aria-expanded', 'true');
+  }
+  const valaszt = i => { lakoValaszt(talalat[i]); zar(); nevElhagyva = true; ellenoriz('kapcsolattarto'); };
+  inp.addEventListener('input', () => { if (valasztott) lakoValaszt(null); akt = -1; rajzol(); ktMutat(); });
+  inp.addEventListener('focus', rajzol);
+  inp.addEventListener('keydown', e => {
+    if (lista.hidden || !talalat.length) return;
+    if (e.key === 'ArrowDown') { akt = (akt + 1) % talalat.length; rajzol(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { akt = (akt - 1 + talalat.length) % talalat.length; rajzol(); e.preventDefault(); }
+    else if (e.key === 'Enter' && akt >= 0) { valaszt(akt); e.preventDefault(); }
+    else if (e.key === 'Escape') zar();
+  });
+  lista.addEventListener('pointerdown', e => { const li = e.target.closest('li[data-i]'); if (li) { e.preventDefault(); valaszt(+li.dataset.i); } });
+  inp.addEventListener('blur', () => {
+    if (!valasztott && inp.value.trim()) {
+      const egy = LAKOK.filter(l => norm(l.nev) === norm(inp.value));
+      if (egy.length === 1) lakoValaszt(egy[0]);
+    }
+    nevElhagyva = inp.value.trim() !== '';
+    setTimeout(() => { zar(); ktMutat(); }, 150);
+  });
+})();
+
+/* ---------- Bejelentő ≠ kapcsolattartó ---------- */
+const masBejelento = () => $('bejelento').value.trim() !== '';
+$('bejelento').addEventListener('input', () => {
+  $('bjKapcsolat').hidden = !masBejelento();
+  if (!masBejelento()) ['telefon', 'email'].forEach(n => $('f-' + n).classList.remove('hiba'));
+});
+$('leiras').addEventListener('input', e => { $('db').textContent = e.target.value.length; });
+
+/* ---------- Ellenőrzés (true = rendben, szöveg = hibaüzenet) ---------- */
+const telOk = v => /^[+0-9 ()\/-]{6,30}$/.test(v) && v.replace(/\D/g, '').length >= 6;
+const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const SZ = {
+  kapcsolattarto: v => v.length >= 2,
+  kt_telefon: v => !v || telOk(v) || 'Kérjük, adjon meg érvényes telefonszámot.',
+  kt_email: v => !v || emailOk(v) || 'Kérjük, adjon meg érvényes e-mail címet.',
+  telefon: v => !masBejelento() || (v ? telOk(v) || 'Kérjük, adjon meg érvényes telefonszámot.' : 'Kérjük, adja meg a bejelentő telefonszámát.'),
+  email: v => !masBejelento() || (v ? emailOk(v) || 'Kérjük, adjon meg érvényes e-mail címet.' : 'Kérjük, adja meg a bejelentő e-mail címét.'),
+  leiras: v => v.length >= 5
+};
+function ellenoriz(n) {
+  const f = $('f-' + n);
+  if (f.closest('[hidden]')) { f.classList.remove('hiba'); return true; }
+  const r = SZ[n]($(n).value.trim()), ok = r === true;
+  f.classList.toggle('hiba', !ok);
+  if (typeof r === 'string') f.querySelector('.err').textContent = r;
+  return ok;
+}
+Object.keys(SZ).forEach(n => {
+  $(n).addEventListener('input', () => { if ($('f-' + n).classList.contains('hiba')) ellenoriz(n); });
+  if (n !== 'kapcsolattarto') $(n).addEventListener('blur', () => { if ($(n).value) ellenoriz(n); });
+});
+
+/* ---------- Fotók ---------- */
+const hibaUz = t => { $('hibauz').textContent = t; $('hibauz').hidden = false; };
+$('foto').addEventListener('change', async e => {
+  const lista = [...e.target.files]; e.target.value = '';
+  if (!lista.length) return;
+  $('hibauz').hidden = true; $('elokeszit').hidden = false;
+  const hely = MAX - fajlok.length;
+  for (const f of lista.slice(0, hely)) {
+    try {
+      const b64 = f.type === 'application/pdf' ? await olvas(f) : await tomorit(f);
+      fajlok.push({ base64: b64, mime: b64.slice(5, b64.indexOf(';')), nev: f.name || 'fotó' });
+    } catch (_) { hibaUz('A(z) „' + (f.name || 'fájl') + '” nem olvasható be vagy túl nagy.'); }
+  }
+  if (lista.length > hely) hibaUz('Legfeljebb ' + MAX + ' fájlt csatolhat, a többit nem vettük fel.');
+  $('elokeszit').hidden = true; kepek();
+});
+function kepek() {
+  $('kepek').innerHTML = '';
+  fajlok.forEach((f, i) => {
+    const d = document.createElement('div'); d.className = 'kep';
+    d.innerHTML = f.mime === 'application/pdf' ? '<div></div>' : '<img alt="">';
+    if (f.mime === 'application/pdf') d.firstChild.textContent = 'PDF · ' + f.nev; else d.firstChild.src = f.base64;
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'Eltávolítás');
+    b.onclick = () => { fajlok.splice(i, 1); kepek(); };
+    d.appendChild(b); $('kepek').appendChild(d);
+  });
+  $('drop').hidden = fajlok.length >= MAX;
+  $('dropDb').textContent = fajlok.length ? 'Még ' + (MAX - fajlok.length) + ' fájl csatolható' : 'Legfeljebb ' + MAX + ' fájl';
+}
+const olvas = f => new Promise((ok, no) => {
+  if (f.size > 8e6) return no();
+  const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = no; r.readAsDataURL(f);
+});
+// Átméretezés max. 1600 px-re JPEG-be – gyors feltöltés mobilnetről is
+const tomorit = f => new Promise((ok, no) => {
+  const url = URL.createObjectURL(f), img = new Image();
+  img.onload = () => {
+    const a = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * a); c.height = Math.round(img.naturalHeight * a);
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url); ok(c.toDataURL('image/jpeg', .82));
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); olvas(f).then(ok, no); };   // pl. HEIC: eredetiben
+  img.src = url;
+});
+
+/* ---------- Beküldés ---------- */
+$('urlap').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('hibauz').hidden = true;
+  const hibas = Object.keys(SZ).filter(n => !ellenoriz(n));
+  if (hibas.length) {
+    $('f-' + hibas[0]).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => $(hibas[0]).focus({ preventScroll: true }), 350);
+    return;
+  }
+  if (!API_URL.startsWith('http')) return hibaUz('Az oldal még nincs összekötve a háttérrendszerrel (API_URL).');
+  const adat = {
+    haz: HAZ,
+    kapcsolattarto: $('kapcsolattarto').value,
+    lakoId: valasztott ? valasztott.id : '',
+    kt_telefon: valasztott ? '' : $('kt_telefon').value,
+    kt_email: valasztott ? '' : $('kt_email').value,
+    bejelento: $('bejelento').value,
+    telefon: masBejelento() ? $('telefon').value : '',
+    email: masBejelento() ? $('email').value : '',
+    targy: $('targy').value,
+    leiras: $('leiras').value,
+    csatolmanyok: fajlok
+  };
+  kuldes(true);
+  try {
+    // text/plain: így a böngésző nem küld előzetes CORS-kérést, és az Apps Script fogadni tudja
+    const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(adat) });
+    const v = await r.json();
+    kuldes(false);
+    if (!v.ok) throw new Error(v.hiba || '');
+    siker(v);
+  } catch (err) {
+    kuldes(false);
+    const u = err && err.message;
+    hibaUz(u && u.length < 160 ? u : 'A bejelentést most nem sikerült elküldeni. Kérjük, ellenőrizze az internetkapcsolatot, és próbálja újra.');
+    $('hibauz').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+function kuldes(be) {
+  $('kuld').disabled = be;
+  $('kuldSzoveg').textContent = be ? (fajlok.length ? 'Fotók feltöltése…' : 'Küldés…') : 'Bejelentés elküldése';
+  $('kuld').firstElementChild.outerHTML = be ? '<span class="forgo"></span>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg>';
+}
+function siker(v) {
+  const sor = [];
+  if (!$('hazSor').hidden) sor.push(['Társasház', $('hazNev').textContent]);
+  sor.push(['Időpont', v.datum || new Date().toLocaleString('hu-HU')]);
+  if (fajlok.length) sor.push(['Fotó', v.sikertelen ? v.csatolva + ' mentve, ' + v.sikertelen + ' sikertelen' : fajlok.length + ' db']);
+  $('nyugta').innerHTML = sor.map(([k, x]) => `<div><dt>${esc(k)}</dt><dd>${esc(x)}</dd></div>`).join('');
+  $('urlap').hidden = true; $('koszi').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+$('ujBtn').addEventListener('click', () => {
+  $('urlap').reset(); fajlok = []; kepek(); nevElhagyva = false; lakoValaszt(null);
+  $('bjKapcsolat').hidden = true; $('db').textContent = '0';
+  document.querySelectorAll('.hiba').forEach(x => x.classList.remove('hiba'));
+  $('koszi').hidden = true; $('urlap').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+kepek();
+</script>
+</body>
+</html>
