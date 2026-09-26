@@ -40,7 +40,6 @@ textarea{min-height:120px;resize:vertical}
 input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,141,87,.15)}
 .hiba input,.hiba textarea{border-color:var(--red)}
 .err{display:none;color:var(--red);font-size:15px;font-weight:600;margin-top:6px}.hiba .err{display:block}
-.szamlalo{text-align:right;font-size:14px;font-variant-numeric:lining-nums tabular-nums;color:var(--soft);margin-top:5px}
 .tipp{font-size:16px;color:var(--soft);margin:0}
 .ket{display:grid;gap:10px}@media(min-width:520px){.ket{grid-template-columns:1fr 1fr}}
 /* Lakókereső */
@@ -125,7 +124,7 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
     <div class="bj-sor"><button type="button" class="valasztva cimke-gomb" id="bjNyit" aria-expanded="false" aria-controls="bjMezo"><span class="jel" aria-hidden="true">+</span>Bejelentő</button><span class="opt">(ha nem egyezik a kapcsolattartóval)</span></div>
     <div class="mezo" id="bjMezo" hidden>
       <div>
-        <label class="l" for="bejelento">Bejelentő neve <span class="opt">(ha nem egyezik a kapcsolattartóval)</span></label>
+        <label class="l" for="bejelento">Bejelentő neve</label>
         <input type="text" id="bejelento" maxlength="120" autocomplete="off">
       </div>
     </div>
@@ -148,7 +147,6 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
       <div>
         <label class="l" for="leiras">Esemény leírása <span class="req">*</span></label>
         <textarea id="leiras" maxlength="5000"></textarea>
-        <div class="szamlalo"><span id="db">0</span> / 5000</div>
         <div class="err">Kérjük, írja le részletesebben az eseményt.</div>
       </div>
     </div>
@@ -271,7 +269,6 @@ $('bejelento').addEventListener('input', () => {
   $('bjKapcsolat').hidden = !masBejelento();
   if (!masBejelento()) ['telefon', 'email'].forEach(n => $('f-' + n).classList.remove('hiba'));
 });
-$('leiras').addEventListener('input', e => { $('db').textContent = e.target.value.length; });
 
 /* ---------- Ellenőrzés (true = rendben, szöveg = hibaüzenet) ---------- */
 const telOk = v => /^[+0-9 ()\/-]{6,30}$/.test(v) && v.replace(/\D/g, '').length >= 6;
@@ -398,7 +395,7 @@ function siker(v) {
 }
 $('ujBtn').addEventListener('click', () => {
   $('urlap').reset(); fajlok = []; kepek(); nevElhagyva = false; lakoValaszt(null);
-  $('bjKapcsolat').hidden = true; $('db').textContent = '0'; bjLenyit(false);
+  $('bjKapcsolat').hidden = true; bjLenyit(false);
   document.querySelectorAll('.hiba').forEach(x => x.classList.remove('hiba'));
   $('koszi').hidden = true; $('urlap').hidden = false;
   window.scrollTo({ top: 0, behavior: 'smooth' });
