@@ -27,10 +27,12 @@ h1{font:600 clamp(28px,8.2vw,42px)/1.02 'Cormorant Garamond',Georgia,serif;margi
 .mezo{margin-bottom:18px}
 .mezo.sub{padding:14px;border:1.5px dashed #dccaa6;border-radius:14px;background:rgba(255,253,249,.8)}
 .mezo.sub .tipp{margin:0 0 12px}
-.lenyito{display:flex;align-items:center;gap:8px;width:100%;margin:-6px 0 18px;padding:4px 0;border:0;background:none;cursor:pointer;text-align:left;font:600 15.5px 'Cormorant Garamond',Georgia,serif;color:#7a5a2b}
-.lenyito .opt{font-size:14.5px}
-.plusz-kis{width:22px;height:22px;flex:none;border-radius:50%;display:grid;place-items:center;font:400 17px/1 Georgia,serif;color:#fff;background:linear-gradient(145deg,#d2b077,#9a7641);transition:transform .2s}
-.lenyito[aria-expanded=true] .plusz-kis{transform:rotate(45deg)}
+#lakoValasztva{margin-top:8px}
+.bj-sor{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:-6px 0 18px}
+.cimke-gomb{border:1px solid rgba(176,141,87,.45);cursor:pointer;font-family:inherit;align-items:center}
+.cimke-gomb .jel{display:inline-block;font-weight:400;font-size:17px;line-height:1;transition:transform .2s}
+.cimke-gomb[aria-expanded=true]{background:linear-gradient(145deg,#d2b077,#9a7641);color:#fff;border-color:transparent}
+.cimke-gomb[aria-expanded=true] .jel{transform:rotate(45deg)}
 label.l,.l{display:block;font-weight:700;font-size:17px;letter-spacing:.01em;margin-bottom:6px;color:#7a5a2b}
 .req{color:#c0392b;margin-left:3px}.opt{font-weight:500;font-size:15px;letter-spacing:0;color:#6b6f7c}
 input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;font-weight:500;font-size:17.5px;color:var(--ink);background:rgba(255,255,255,.6);border:1.5px solid rgba(176,141,87,.35);border-radius:14px;padding:10px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
@@ -49,7 +51,7 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
 .lista mark{background:none;color:var(--gold2);font-weight:600}
 .lista small{color:var(--soft)}
 .lista li.ures{cursor:default;color:var(--soft);font-size:16px;background:none}
-.valasztva{display:inline-flex;gap:6px;margin-top:8px;padding:5px 12px;border-radius:99px;background:var(--cream);color:var(--gold2);font-size:15px;font-weight:600}
+.valasztva{display:inline-flex;gap:6px;padding:5px 12px;border-radius:99px;background:var(--cream);color:var(--gold2);font-size:15px;font-weight:600}
 /* Fotók */
 .drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 12px;border:1.5px dashed #dccaa6;border-radius:14px;background:#fffdf9;text-align:center;cursor:pointer}
 .drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
@@ -91,8 +93,7 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
 <section class="card">
   <div class="cim">
     <div>
-      <h1>Társasházi bejelentő adatlap</h1>
-      <p class="haz" id="hazSor" hidden><svg viewBox="0 0 24 24" fill="#b08d57"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span id="hazNev"></span></p>
+      <h1 id="cim">Bejelentő Adatlap</h1>
     </div>
   </div>
 
@@ -121,12 +122,10 @@ input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0
       </div>
     </div>
 
-    <button type="button" class="lenyito" id="bjNyit" aria-expanded="false" aria-controls="bjMezo">
-      <span class="plusz-kis" aria-hidden="true">+</span>Más jelenti be? <span class="opt">(ha nem egyezik a kapcsolattartóval)</span>
-    </button>
+    <div class="bj-sor"><button type="button" class="valasztva cimke-gomb" id="bjNyit" aria-expanded="false" aria-controls="bjMezo"><span class="jel" aria-hidden="true">+</span>Bejelentő</button><span class="opt">(ha nem egyezik a kapcsolattartóval)</span></div>
     <div class="mezo" id="bjMezo" hidden>
       <div>
-        <label class="l" for="bejelento">Bejelentő neve</label>
+        <label class="l" for="bejelento">Bejelentő neve <span class="opt">(ha nem egyezik a kapcsolattartóval)</span></label>
         <input type="text" id="bejelento" maxlength="120" autocomplete="off">
       </div>
     </div>
@@ -191,7 +190,7 @@ const API_URL = String(window.BEJELENTO_API || '');
 const $ = id => document.getElementById(id);
 const HAZ = new URLSearchParams(location.search).get('haz') || '';
 const MAX = 5;
-let LAKOK = [], valasztott = null, nevElhagyva = false, fajlok = [];
+let HAZ_NEV = '', LAKOK = [], valasztott = null, nevElhagyva = false, fajlok = [];
 const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -200,7 +199,7 @@ if (HAZ && API_URL.startsWith('http')) {
   fetch(API_URL + '?api=adatok&haz=' + encodeURIComponent(HAZ))
     .then(r => r.json())
     .then(d => {
-      if (d.hazNev) { $('hazNev').textContent = d.hazNev; $('hazSor').hidden = false; document.title = 'Bejelentés – ' + d.hazNev; }
+      if (d.hazNev) { HAZ_NEV = d.hazNev; $('cim').textContent = d.hazNev + ' Bejelentő Adatlap'; document.title = d.hazNev + ' – Bejelentő Adatlap'; }
       LAKOK = d.lakok || [];
     })
     .catch(() => {});
@@ -390,7 +389,7 @@ function kuldes(be) {
 }
 function siker(v) {
   const sor = [];
-  if (!$('hazSor').hidden) sor.push(['Társasház', $('hazNev').textContent]);
+  if (HAZ_NEV) sor.push(['Társasház', HAZ_NEV]);
   sor.push(['Időpont', v.datum || new Date().toLocaleString('hu-HU')]);
   if (fajlok.length) sor.push(['Fotó', v.sikertelen ? v.csatolva + ' mentve, ' + v.sikertelen + ' sikertelen' : fajlok.length + ' db']);
   $('nyugta').innerHTML = sor.map(([k, x]) => `<div><dt>${esc(k)}</dt><dd>${esc(x)}</dd></div>`).join('');
