@@ -1,1 +1,1 @@
-window.BEJELENTO_API = 'https://script.google.com/macros/s/AKfycbwt1_R04CmEecTxnxeITI43Pm6cKu2xloh68z04VCuIVf7KiQ5gIShRpIgnECqXexO4/exec';
+window.BEJELENTO_API = 'https://script.google.com/macros/s/AKfycbwMTZdVLue7HNj6bsPnuNrE7QEC0JAsiVBHwf6BQVqbE7dTo_NgNv70f0IxoBPUGkHs/exec';
