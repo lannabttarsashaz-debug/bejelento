@@ -89,14 +89,13 @@ input:focus,select:focus,textarea:focus{background:#fff;border-color:var(--gold)
         <h2>Társasház</h2>
         <select id="haz"></select>
         <p class="tipp" id="hazTipp" hidden style="margin:8px 0 0"></p>
+        <label class="l" for="fBejelento">Bejelentő</label><input type="text" id="fBejelento">
       </div>
 
       <div class="kartya blokk" id="bFeladat">
         <label class="fejpipa"><input type="checkbox" id="pFeladat" checked> Feladatkezelőbe</label>
         <div class="tartalom">
           <label class="l" for="fCim">Feladat címe</label><input type="text" id="fCim">
-          <label class="l" for="fCimke">Címke</label><input type="text" id="fCimke">
-          <label class="l" for="fBejelento">Bejelentő</label><input type="text" id="fBejelento">
           <label class="l" for="fSzaki">Szakember</label><input type="text" id="fSzaki">
           <label class="l" for="fLeiras">Leírás</label><textarea id="fLeiras" rows="7"></textarea>
         </div>
@@ -106,6 +105,7 @@ input:focus,select:focus,textarea:focus{background:#fff;border-color:var(--gold)
         <label class="fejpipa"><input type="checkbox" id="pNaplo" checked> Eseménynaplóba</label>
         <div class="tartalom">
           <label class="l" for="nCim">Cím</label><input type="text" id="nCim">
+          <label class="l" for="fCimke">Címke</label><input type="text" id="fCimke">
           <label class="l" for="nSzoveg">Leírás</label><textarea id="nSzoveg" rows="6"></textarea>
           <label class="l" for="nBelso">Belső megjegyzés</label><textarea id="nBelso" rows="4"></textarea>
           <label class="pipa"><input type="checkbox" id="nPublikus"> Kimehet a hirdetőtáblára</label>
@@ -318,10 +318,10 @@ $('mentes').addEventListener('click', async () => {
   try {
     const v = await api('kepviseloMentes', {
       haz: { azon: $('haz').value, nev: $('haz').selectedOptions[0].text },
-      feladat: feladat ? { cim: $('fCim').value, cimke: $('fCimke').value, bejelento: $('fBejelento').value,
-                           szakember: $('fSzaki').value, leiras: $('fLeiras').value } : null,
-      naplo: naplo ? { cim: $('nCim').value, szoveg: $('nSzoveg').value, belso: $('nBelso').value,
-                       publikus: $('nPublikus').checked } : null,
+      bejelento: $('fBejelento').value,
+      feladat: feladat ? { cim: $('fCim').value, szakember: $('fSzaki').value, leiras: $('fLeiras').value } : null,
+      naplo: naplo ? { cim: $('nCim').value, cimke: $('fCimke').value, szoveg: $('nSzoveg').value,
+                       belso: $('nBelso').value, publikus: $('nPublikus').checked } : null,
       uzenetSzaki: $('uSzaki').value,
       uzenetBejelento: $('uBejelento').value
     });
