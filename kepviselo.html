@@ -114,7 +114,7 @@ input:focus,select:focus,textarea:focus{background:#fff;border-color:var(--gold)
 
       <div class="kartya">
         <h2>Üzenetek</h2>
-        <p class="tipp">Küldés előtt ellenőrizze a szögletes zárójeles részeket.</p>
+        <p class="tipp">Küldés előtt ellenőrizze a szögletes zárójeles részeket. Az üzenetek a mentéskor megőrződnek.</p>
         <div class="uzcim">A szakembernek</div>
         <textarea id="uSzaki" rows="6"></textarea>
         <div class="gombsor">
@@ -310,7 +310,8 @@ $('mentes').addEventListener('click', async () => {
   $('mentesHiba').hidden = true;
   const feladat = $('pFeladat').checked, naplo = $('pNaplo').checked;
   const hiba = szoveg => { $('mentesHiba').textContent = szoveg; $('mentesHiba').hidden = false; };
-  if (!feladat && !naplo) return hiba('Jelölje be, hová kerüljön a bejegyzés.');
+  if (!feladat && !naplo && !$('uSzaki').value.trim() && !$('uBejelento').value.trim())
+    return hiba('Jelölje be, hová kerüljön a bejegyzés.');
   if (!$('haz').value) return hiba('Kérjük, válassza ki a társasházat.');
 
   const g = $('mentes'); g.disabled = true; g.innerHTML = '<span class="forgo"></span>Mentés…';
@@ -320,7 +321,9 @@ $('mentes').addEventListener('click', async () => {
       feladat: feladat ? { cim: $('fCim').value, cimke: $('fCimke').value, bejelento: $('fBejelento').value,
                            szakember: $('fSzaki').value, leiras: $('fLeiras').value } : null,
       naplo: naplo ? { cim: $('nCim').value, szoveg: $('nSzoveg').value, belso: $('nBelso').value,
-                       publikus: $('nPublikus').checked } : null
+                       publikus: $('nPublikus').checked } : null,
+      uzenetSzaki: $('uSzaki').value,
+      uzenetBejelento: $('uBejelento').value
     });
     if (!v.ok) throw new Error(v.hiba);
     $('keszUz').textContent = v.uzenet || 'Mentve.';
